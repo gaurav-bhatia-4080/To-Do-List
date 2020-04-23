@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
+    <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+    <script src="https://kit.fontawesome.com/5258c2a186.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    
+</head>
+<body>
+    <!-- Container of the APP -->
+    <div class="container" id='style-1'>
+        <div class="heading">
+            <i class="fas fa-clipboard-list"></i>
+            <h1>TODO App</h1>
+        </div>
+        <!-- Form for inputting data -->
+        <div class="form-container">
+            <form action="/create-list" method="POST">
+                <!-- Description Form -->
+                <div class="bor-bot">                
+                    <div>
+                        <label for="description"><p>Description</p></label>
+                    </div>
+                    <div class="desc">
+                        <input type="text" placeholder="What do you need to do?" name="description" required="required" id="description">
+                    </div>
+                </div>
+                <!-- Dropdown for Category -->
+                <div class="bor-bot flex">
+                    <div class="category">
+                        <label for="category"><p>Category</p></label>
+                        <select required id="dropdown" name="category">
+                            <option value="" disabled selected hidden>Choose the Category</option>
+                            <option value="Personal" id="option">Personal</option>
+                            <option value="Work">Work</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <!-- Datepicker -->
+                    <div class="due-date">
+                        <label for="date"><p>Due-Date</p></label>
+                        <input class="unstyled" type="date" name="date" required="required" id="datepicker" min="2020-01-12">
+                    </div>
+                </div>
+                <!-- Submitting the Form -->
+                <div class="bor-bot add-but">
+                    <button type="submit" id="add-task"><i class="fas fa-plus"></i> Add Task </button>
+                </div>
+            </form>
+
+            <!-- Display and Deletion of a Task -->
+            <div class="list">
+                <form action="/delete-task" method="POST" >
+                    <!-- Deletion -->
+                    <div class="del-but">
+                        <button type="submit" id="add-task" ><i class="fas fa-trash-alt"></i> Delete </button>
+                    </div>
+                    <!-- Display -->
+                    <% for(let i of list){ %>
+                    <div class="item hvr-grow ">
+                        <input type="checkbox" value="<%= i._id %>" name="check<%= i._id %>" class="check">
+                        <span>
+                            <h2 id="strike"><%= i.description %></h2>
+                            <% if (i.category=="Personal") { %>
+                                <div class="display bg_yellow"><%= i.category %></div>
+                            <% } else if(i.category=="Cleaning") { %>
+                                <div class="display bg_orange"><%= i.category %></div>
+                            <% } else if(i.category=="Work") { %>
+                                <div class="display bg_violet"><%= i.category %></div>
+                            <% } else if(i.category=="Others") { %>
+                                <div class="display bg_cyan"><%= i.category %></div>
+                            <% } %>
+                            <p id="strike2"><i class="far fa-calendar-alt"></i> <%= i.date %></p>
+                            <div onclick="fn1()" id="shift" class="display">Mark Done</div>
+                        </span>
+                    </div>
+                    <% } %>
+                </form>
+
+            </div>
+        
+
+    </div>
+
+    <script src="/js/index.js"></script>
+
+
+</body>
+</html>
